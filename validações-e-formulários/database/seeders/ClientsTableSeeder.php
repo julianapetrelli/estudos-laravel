@@ -16,6 +16,12 @@ class ClientsTableSeeder extends Seeder
     {
        Client::factory()
        ->count(5)
+       ->state(\App\Models\Client::TYPE_INDIVIDUAL)
+       ->create();
+
+       Client::factory()
+       ->count(5)
+       ->state(\App\Models\Client::TYPE_LEGAL)
        ->create();
     }
 }

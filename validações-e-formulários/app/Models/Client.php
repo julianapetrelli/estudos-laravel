@@ -9,6 +9,9 @@ class Client extends Model
 {
     use HasFactory;
 
+    const TYPE_INDIVIDUAL = 'individual';
+    const TYPE_LEGAL = 'legal';
+    
     const MARITAL_STATUS = [
         1 => 'Solteiro',
         2 => 'Casado',
@@ -24,6 +27,13 @@ class Client extends Model
         'date_birth',
         'sex',
         'marital_status',
-        'physical_disability'
+        'physical_disability',
+        'company_name',
+        'client_type'
     ];
+
+    public static function getClientType($type)
+    {
+        return $type == Client::TYPE_LEGAL ? $type : Client::TYPE_INDIVIDUAL;
+    }
 }

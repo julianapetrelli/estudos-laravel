@@ -18,7 +18,7 @@ class ClientsController extends Controller
 
     public function create()
     {
-        return view('admin.clients.create');
+        return view('admin.clients.create', ['client' => new Client()]);
     }
 
   
@@ -38,17 +38,22 @@ class ClientsController extends Controller
         return redirect()->route('clients.index');
     }
 
-    public function show($id)
+    public function show(Client $client)
     {
-        //
+        return view('admin.clients.show', compact('client'));
     }
 
 
-    public function edit($id)
+    public function edit(Client $client) // Route Model binding - Implicito
     {
-        # findfaill verifica a existencia no id, caso não tenha, será retornada uma página 404
+        # Client $cliente
+        #Recebendo o ID, buscando no banco e validando automaticamente
+
+        # findfaill verifica a existencia do id, caso não tenha, será retornada uma página 404
         # Recolhendo o id no cliente do nosso model
-        $client = Client::FindOrFail($id);
+    
+        # $client = Client::FindOrFail($id);
+
         return view('admin.clients.edit', compact('client'));
     }
 
@@ -56,6 +61,7 @@ class ClientsController extends Controller
     {
         
         $client = Client::FindOrFail($id);
+
 
         $this->_validade($request);
 
@@ -72,9 +78,10 @@ class ClientsController extends Controller
         return redirect()->route('clients.index');
     }
 
-    public function destroy($id)
+    public function destroy(Client $client)
     {
-        //
+        $client->delete();
+        return redirect()->route('clients.index');
     }
 
     protected function _validade (Request $request) {
